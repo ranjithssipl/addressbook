@@ -1,0 +1,92 @@
+<div  class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+      <div class="sort-button">
+        <button type="button" class="btn btn-default btn-sm" (click)="sorting()">
+          <span class="glyphicon glyphicon-sort"></span> Sort
+        </button>
+      </div>
+      <ul class="nav nav-pills nav-stacked">
+        <li *ngFor="let data of people" [ngClass]="{'active': selected.includes(data?.name)}"><a  (click)="selectedItem(data)">{{data.name}}</a></li>
+      </ul><br>
+    </div>
+
+    <div class="col-sm-9">
+      <div class="container emp-profile">
+        <form method="post">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="profile-img" (click)="uploadFile()">
+                <img class="responsive"
+                  [src]="addressInfo.profileImage"
+                  alt="no image" 
+                  onerror="this.src='assets/default-user.png'"/>
+                <div class="file btn btn-lg btn-primary clickable" (click)="uploadFile()">
+                  Change Photo
+                  <input type="file" id="image-type"
+                  accept="image/*"
+                  (change)="onSelectFile($event)"
+                   />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="profile-head">
+                <h2>
+                  {{addressInfo['name']}}
+                </h2>
+                <h5>
+                  {{addressInfo['workExperience'][0]?.title}}
+                </h5>
+                <h5>
+                  {{addressInfo['phone']}}
+                </h5>
+                <h6>
+                  {{addressInfo['email']}}
+                </h6>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="profile-work">
+                <h2>Education</h2>
+                <ul>
+                  <li *ngFor="let education of addressInfo['education']">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <p class="proile-summary">{{education.startYear}} - {{education.endYear}}</p>
+                      </div>
+                      <div class="col-md-10">
+                        <p class="summary">
+                          {{education.institution}}<br>{{education.degree}}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <h2>Experience</h2>
+                <ul>
+                  <li *ngFor="let experience of addressInfo['workExperience']">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <p *ngIf="experience.endYear" class="proile-summary">{{experience.startYear}} - {{experience.endYear}}</p>
+                        <p *ngIf="!experience.endYear" class="proile-summary">{{experience.startYear}} - Present</p>
+                      </div>
+                      <div class="col-md-10">
+                        <p class="summary">
+                          {{experience.institution}}<br>{{experience.title}}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
